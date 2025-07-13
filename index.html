@@ -1,0 +1,406 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Submit Grievance</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .container {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+            max-width: 600px;
+            width: 100%;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        h1 {
+            text-align: center;
+            color: #333;
+            margin-bottom: 30px;
+            font-size: 2.5em;
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .form-group {
+            margin-bottom: 25px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            color: #555;
+            font-weight: 600;
+            font-size: 1.1em;
+        }
+
+        input, select, textarea {
+            width: 100%;
+            padding: 15px;
+            border: 2px solid #e0e0e0;
+            border-radius: 10px;
+            font-size: 16px;
+            transition: all 0.3s ease;
+            background: rgba(255, 255, 255, 0.9);
+        }
+
+        input:focus, select:focus, textarea:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+            transform: translateY(-2px);
+        }
+
+        textarea {
+            resize: vertical;
+            min-height: 120px;
+        }
+
+        .required {
+            color: #e74c3c;
+        }
+
+        .submit-btn {
+            width: 100%;
+            padding: 18px;
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-size: 18px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .submit-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(102, 126, 234, 0.3);
+        }
+
+        .submit-btn:active {
+            transform: translateY(-1px);
+        }
+
+        .navigation {
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        .nav-link {
+            color: #667eea;
+            text-decoration: none;
+            font-weight: 600;
+            transition: color 0.3s ease;
+        }
+
+        .nav-link:hover {
+            color: #764ba2;
+        }
+
+        .success-message {
+            background: linear-gradient(45deg, #4CAF50, #45a049);
+            color: white;
+            padding: 20px;
+            border-radius: 10px;
+            margin-top: 20px;
+            text-align: center;
+            font-weight: 600;
+            display: none;
+        }
+
+        .loading {
+            display: none;
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        .spinner {
+            border: 4px solid #f3f3f3;
+            border-top: 4px solid #667eea;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            animation: spin 1s linear infinite;
+            margin: 0 auto;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Submit Grievance</h1>
+        
+        <form id="grievanceForm">
+            <div class="form-group">
+                <label for="fullName">Full Name <span class="required">*</span></label>
+                <input type="text" id="fullName" name="fullName" required>
+            </div>
+
+            <div class="form-group">
+                <label for="email">Email Address <span class="required">*</span></label>
+                <input type="email" id="email" name="email" required>
+            </div>
+
+            <div class="form-group">
+                <label for="phone">Phone Number <span class="required">*</span></label>
+                <input type="tel" id="phone" name="phone" required>
+            </div>
+
+            <div class="form-group">
+                <label for="department">Department <span class="required">*</span></label>
+                <select id="department" name="department" required>
+                    <option value="">Select Department</option>
+                    <option value="HR">Human Resources</option>
+                    <option value="IT">Information Technology</option>
+                    <option value="Finance">Finance</option>
+                    <option value="Operations">Operations</option>
+                    <option value="Customer Service">Customer Service</option>
+                    <option value="Legal">Legal</option>
+                    <option value="Other">Other</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="category">Grievance Category <span class="required">*</span></label>
+                <select id="category" name="category" required>
+                    <option value="">Select Category</option>
+                    <option value="Workplace Harassment">Workplace Harassment</option>
+                    <option value="Discrimination">Discrimination</option>
+                    <option value="Pay/Benefits">Pay/Benefits</option>
+                    <option value="Working Conditions">Working Conditions</option>
+                    <option value="Management Issues">Management Issues</option>
+                    <option value="Policy Violation">Policy Violation</option>
+                    <option value="Other">Other</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="priority">Priority Level <span class="required">*</span></label>
+                <select id="priority" name="priority" required>
+                    <option value="">Select Priority</option>
+                    <option value="Low">Low</option>
+                    <option value="Medium">Medium</option>
+                    <option value="High">High</option>
+                    <option value="Critical">Critical</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="subject">Subject <span class="required">*</span></label>
+                <input type="text" id="subject" name="subject" required>
+            </div>
+
+            <div class="form-group">
+                <label for="description">Detailed Description <span class="required">*</span></label>
+                <textarea id="description" name="description" placeholder="Please provide a detailed description of your grievance..." required></textarea>
+            </div>
+
+            <div class="form-group">
+                <label for="dateIncident">Date of Incident</label>
+                <input type="date" id="dateIncident" name="dateIncident">
+            </div>
+
+            <div class="form-group">
+                <label for="location">Location/Building</label>
+                <input type="text" id="location" name="location">
+            </div>
+
+            <div class="form-group">
+                <label for="witnesses">Witnesses (if any)</label>
+                <textarea id="witnesses" name="witnesses" placeholder="Names and contact information of witnesses..."></textarea>
+            </div>
+
+            <button type="submit" class="submit-btn">Submit Grievance</button>
+        </form>
+
+        <div class="loading" id="loading">
+            <div class="spinner"></div>
+            <p>Submitting your grievance...</p>
+        </div>
+
+        <div class="success-message" id="successMessage">
+            <h3>Grievance Submitted Successfully!</h3>
+            <p>Your grievance ID is: <strong id="grievanceId"></strong></p>
+            <p>Please save this ID for tracking purposes.</p>
+        </div>
+
+        <div class="navigation">
+            <a href="#" class="nav-link" onclick="showTracker()">Track Existing Grievance</a>
+        </div>
+    </div>
+
+    <script>
+        // Generate unique grievance ID
+        function generateGrievanceId() {
+            const timestamp = Date.now().toString(36);
+            const randomStr = Math.random().toString(36).substr(2, 5);
+            return `GRV-${timestamp}-${randomStr}`.toUpperCase();
+        }
+
+        // Store grievances in memory (in a real app, this would be a database)
+        let grievances = JSON.parse(localStorage.getItem('grievances') || '[]');
+
+        // Form submission handler
+        document.getElementById('grievanceForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            
+            const formData = new FormData(this);
+            const grievanceData = {};
+            
+            // Collect form data
+            for (let [key, value] of formData.entries()) {
+                grievanceData[key] = value;
+            }
+            
+            // Generate grievance ID and add metadata
+            const grievanceId = generateGrievanceId();
+            grievanceData.grievanceId = grievanceId;
+            grievanceData.status = 'Submitted';
+            grievanceData.submissionDate = new Date().toISOString();
+            grievanceData.lastUpdated = new Date().toISOString();
+            
+            // Show loading
+            document.getElementById('loading').style.display = 'block';
+            document.querySelector('.submit-btn').disabled = true;
+            
+            try {
+                // Simulate API call delay
+                await new Promise(resolve => setTimeout(resolve, 2000));
+                
+                // Store in local storage (simulating database)
+                grievances.push(grievanceData);
+                localStorage.setItem('grievances', JSON.stringify(grievances));
+                
+                // Send to Google Sheets (you'll need to implement this)
+                await sendToGoogleSheets(grievanceData);
+                
+                // Show success message
+                document.getElementById('loading').style.display = 'none';
+                document.getElementById('grievanceId').textContent = grievanceId;
+                document.getElementById('successMessage').style.display = 'block';
+                
+                // Reset form
+                this.reset();
+                
+            } catch (error) {
+                console.error('Error submitting grievance:', error);
+                alert('Error submitting grievance. Please try again.');
+                document.getElementById('loading').style.display = 'none';
+                document.querySelector('.submit-btn').disabled = false;
+            }
+        });
+
+        // Function to send data to Google Sheets
+        async function sendToGoogleSheets(data) {
+            // You'll need to replace this with your actual Google Sheets API endpoint
+            // This is a placeholder that demonstrates the structure
+            const GOOGLE_SHEETS_URL = 'https://script.google.com/macros/s/AKfycbx3zHBAGPPfGMkFFrqA9Sn-HRvmbKIGc6O_UCyjamihCAa9RTY4icnN9ZvvkR7ugP1jDg/exec';
+            
+            try {
+                const response = await fetch(GOOGLE_SHEETS_URL, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(data)
+                });
+                
+                if (!response.ok) {
+                    throw new Error('Failed to send data to Google Sheets');
+                }
+                
+                return await response.json();
+            } catch (error) {
+                console.error('Google Sheets error:', error);
+                // In a real application, you might want to queue this for retry
+                throw error;
+            }
+        }
+
+        // Show tracker page
+        function showTracker() {
+            document.body.innerHTML = `
+                <div class="container">
+                    <h1>Track Grievance</h1>
+                    
+                    <div class="form-group">
+                        <label for="trackingId">Enter Grievance ID</label>
+                        <input type="text" id="trackingId" placeholder="e.g., GRV-ABC123-XYZ">
+                    </div>
+                    
+                    <button onclick="trackGrievance()" class="submit-btn">Track Grievance</button>
+                    
+                    <div id="trackingResult" style="margin-top: 20px;"></div>
+                    
+                    <div class="navigation">
+                        <a href="#" class="nav-link" onclick="location.reload()">Submit New Grievance</a>
+                    </div>
+                </div>
+            `;
+        }
+
+        // Track grievance function
+        function trackGrievance() {
+            const trackingId = document.getElementById('trackingId').value.trim();
+            const resultDiv = document.getElementById('trackingResult');
+            
+            if (!trackingId) {
+                resultDiv.innerHTML = '<p style="color: red;">Please enter a grievance ID</p>';
+                return;
+            }
+            
+            const grievance = grievances.find(g => g.grievanceId === trackingId);
+            
+            if (!grievance) {
+                resultDiv.innerHTML = '<p style="color: red;">Grievance not found</p>';
+                return;
+            }
+            
+            resultDiv.innerHTML = `
+                <div style="background: rgba(255, 255, 255, 0.9); padding: 20px; border-radius: 10px; border: 2px solid #667eea;">
+                    <h3>Grievance Details</h3>
+                    <p><strong>ID:</strong> ${grievance.grievanceId}</p>
+                    <p><strong>Status:</strong> <span style="color: #4CAF50; font-weight: bold;">${grievance.status}</span></p>
+                    <p><strong>Subject:</strong> ${grievance.subject}</p>
+                    <p><strong>Department:</strong> ${grievance.department}</p>
+                    <p><strong>Priority:</strong> ${grievance.priority}</p>
+                    <p><strong>Submitted:</strong> ${new Date(grievance.submissionDate).toLocaleString()}</p>
+                    <p><strong>Last Updated:</strong> ${new Date(grievance.lastUpdated).toLocaleString()}</p>
+                    <p><strong>Description:</strong> ${grievance.description}</p>
+                </div>
+            `;
+        }
+
+        // Make trackGrievance available globally
+        window.trackGrievance = trackGrievance;
+    </script>
+</body>
+</html>
